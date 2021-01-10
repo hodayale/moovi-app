@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 class Actor {
     constructor(fname, lname, birthday, imbdLink, picture) {
         this.fname = fname;
@@ -6,7 +8,10 @@ class Actor {
         this.imbdLink = imbdLink;
         this.picture = picture;
     }
-    getAge() {
-        moment(this.birthday, "DD/MM/YYYY").fromNow();
+    getAge() { 
+        const age = moment().diff(moment(this.birthday, "DD/MM/YYYY"), 'years');
+        return age;
     }
 }
+
+export default Actor;
