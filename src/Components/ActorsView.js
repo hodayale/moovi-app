@@ -15,11 +15,7 @@ const ActorsView = (props) => {
         <Card style={{ width: '18rem', display: actor.fullName.toLowerCase().includes(filter.toLowerCase()) ? "" : "none"}} key={i}>
             <Card.Img variant="top" src={actor.picture} />
             <Card.Body>
-                <Card.Title className="text-center">{actor.fullName}</Card.Title>
-                <Card.Text>
-                Birthday: {actor.birthday}
-                </Card.Text>
-                <Card.Text>IMBD: <Card.Link href={actor.imbdLink}>{actor.imbdLink}</Card.Link></Card.Text>
+                <Card.Title><Card.Link href={actor.imbdLink} target="_blank">{actor.fullName}</Card.Link></Card.Title>
                 <Card.Text>Age: {actor.getAge()}</Card.Text>             
             </Card.Body>
         </Card>
@@ -28,7 +24,7 @@ const ActorsView = (props) => {
     return(
         <Container>
             <Jumbotron>
-                <h1 className="text-center text-primary">Actors View</h1>           
+                <h1 className="text-center text-primary">Actors Gallery</h1>           
             </Jumbotron>
             <Form>
                 <Form.Group as={Row} controlId="formPlaintextFilter">
