@@ -7,6 +7,7 @@ class Actor {
         this.birthday = birthday;
         this.imbdLink = imbdLink;
         this.picture = picture;
+        this.fullName = this.fname + " " + this.lname;
     }
     getAge() { 
         const age = moment().diff(moment(this.birthday, "DD/MM/YYYY"), 'years');
