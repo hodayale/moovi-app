@@ -1,28 +1,30 @@
 import React from 'react';
-import Card from 'react-bootstrap/Card'
-import CardColumns from 'react-bootstrap/CardColumns'
-import Jumbotron from 'react-bootstrap/Jumbotron'
-import Form from 'react-bootstrap/Form'
-import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
-import { Container } from 'react-bootstrap';
+import { Card, CardColumns, Col, Container, Form, Jumbotron, Row } from 'react-bootstrap';
 import LiveSearchBox from './LiveSearchBox';
+import MovieCard from './MovieCard';
 
 const ActorsView = (props) => {
     const {actors} = props;
     const [filter, setFilter] = React.useState('');
     const [results, setResults] = React.useState([]);
+    const [selectedMovie, setselectedMovie] = React.useState([]);
 
-    const staticMoovieJson = ["Wonder Woman", "Skylines", "Breach", "Monster Hunter"];
+    const staticMovieJson = ["Wonder Woman", "Skylines", "Breach", "Monster Hunter"];
 
-    const SearchMoovie = (searchText) => {
+    const searchMovie = (searchText) => {
         if(!searchText) {
             setResults([]);
             return;
         }
 
-        const searchResults = staticMoovieJson.filter((moovie) => { return moovie.toLowerCase().includes(searchText.toLowerCase()); });
+        const searchResults = staticMovieJson.filter((movie) => { return movie.toLowerCase().includes(searchText.toLowerCase()); });
         setResults(searchResults);
+    }
+
+    const addMovie = (index) => {
+        setResults([]);
+        const movie = results[index];
+        setselectedMovie(selectedMovie.concat(movie));
     }
 
     const actorArr = actors.map( (actor, i) => 
@@ -34,6 +36,10 @@ const ActorsView = (props) => {
             </Card.Body>
         </Card>
     );
+
+    const movieCards = selectedMovie.map((movie, index) => {
+        return <MovieCard key={index} movieName={movie}></MovieCard> 
+    });
 
     return(
         <Container>
@@ -53,8 +59,13 @@ const ActorsView = (props) => {
             <CardColumns>
                 {actorArr}
             </CardColumns>
-            <LiveSearchBox placeholderText="Search a Moovie" results={results}
-                        searchTextChanged={SearchMoovie}/>
+            <LiveSearchBox placeholderText="Search a Movie" results={results}
+                        searchTextChanged={searchMovie}
+                        resultSelected={addMovie}/>
+            <CardColumns>
+                {movieCards}
+            </CardColumns>
+            
         </Container>
     )
 }

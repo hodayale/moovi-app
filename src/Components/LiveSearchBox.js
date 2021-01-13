@@ -3,16 +3,23 @@ import './LiveSearchBox.css'
 import React from 'react';
 
 const LiveSearchBox = (props) => {
-    const {placeholderText, results, searchTextChanged} = props;
+    const {placeholderText, results, searchTextChanged, resultSelected} = props;
     const [searchText, setSearchText] = React.useState('');
     
+    const handleClick = (index) => {
+        resultSelected(index);
+        setSearchText('');
+    }
+
     const resultElements = results.map((item, index) => {
-        return <ListGroup.Item key={index}>{item}</ListGroup.Item>
-    });
+        return <ListGroup.Item onClick={() => {handleClick(index)}} key={index}>{item}</ListGroup.Item>
+    });    
+
     const handleInputChange = (e) => {
         setSearchText(e.target.value);
         searchTextChanged(e.target.value);
     }
+
     return(
         <div className="c-live-search-box">
             <Form.Control type="search" placeholder={placeholderText}
@@ -21,7 +28,6 @@ const LiveSearchBox = (props) => {
             <ListGroup className="search-results">
                 {resultElements}
             </ListGroup>
-            <p>This should be hidden</p>
         </div>
     );
 }
