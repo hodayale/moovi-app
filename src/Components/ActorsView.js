@@ -1,6 +1,8 @@
+import './ActorsView.css'
 import axios from 'axios';
 import React from 'react';
 import { CardColumns, Col, Container, Form, Jumbotron, Row } from 'react-bootstrap';
+import Movie from '../data-model/Movie';
 import ActorCard from './ActorCard';
 import LiveSearchBox from './LiveSearchBox';
 import MovieCard from './MovieCard';
@@ -21,9 +23,8 @@ const ActorsView = (props) => {
 
         axios.get(`https://api.themoviedb.org/3/search/movie?api_key=08442e61ff4b1a9dadac378c430aabf7&query=${searchText}`)
                 .then((res) => {
-                    const names = res.data.results.map((item) => item.title);
-                    debugger;
-                    setResults(names);
+                    const namesAndId = res.data.results.map((item) => {return {name: item.title, id: item.id}});
+                    setResults(namesAndId);
                 });
 
         // const searchResults = staticMovieJson.filter((movie) => { return movie.toLowerCase().includes(searchText.toLowerCase()); });
@@ -32,8 +33,17 @@ const ActorsView = (props) => {
 
     const addMovie = (index) => {
         setResults([]);
+
         const movie = results[index];
-        setselectedMovie(selectedMovie.concat(movie));
+        axios.get(`https://api.themoviedb.org/3/movie/${movie.id}?api_key=08442e61ff4b1a9dadac378c430aabf7&append_to_response=images,credits`)
+                .then((res) => {
+                    debugger;
+                    const director = res.data.credits.crew.find(item => item.known_for_department === "Directing");
+                    const star = res.data.credits.cast[0] != undefined ? res.data.credits.cast[0].name : "";
+                    const movie = new Movie(res.data.id, res.data.title, 0, `https://image.tmdb.org/t/p/w200${res.data.poster_path}`, director != undefined ? director.name : "", star);
+                    setselectedMovie(selectedMovie.concat(movie));
+                })
+        // setselectedMovie(selectedMovie.concat(movie));
     }
 
     const actorArr = actors.map( (actor, i) => 
@@ -41,7 +51,7 @@ const ActorsView = (props) => {
     );
 
     const movieCards = selectedMovie.map((movie, index) => 
-        <MovieCard key={index} movieName={movie}/>
+        <MovieCard id={movie.id} name={movie.name} lengthInMin={movie.lengthInMin} poster={movie.poster} director={movie.director} mainStars={movie.mainStars}/>
     );
 
     return(
@@ -65,7 +75,7 @@ const ActorsView = (props) => {
             <LiveSearchBox placeholderText="Search a Movie" results={results}
                         searchTextChanged={searchMovie}
                         resultSelected={addMovie}/>
-            <CardColumns>
+            <CardColumns className="c-movie-view">
                 {movieCards}
             </CardColumns>
             
