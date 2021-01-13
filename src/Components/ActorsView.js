@@ -1,5 +1,6 @@
 import React from 'react';
-import { Card, CardColumns, Col, Container, Form, Jumbotron, Row } from 'react-bootstrap';
+import { CardColumns, Col, Container, Form, Jumbotron, Row } from 'react-bootstrap';
+import ActorCard from './ActorCard';
 import LiveSearchBox from './LiveSearchBox';
 import MovieCard from './MovieCard';
 
@@ -28,18 +29,12 @@ const ActorsView = (props) => {
     }
 
     const actorArr = actors.map( (actor, i) => 
-        <Card style={{ width: '18rem', display: actor.fullName.toLowerCase().includes(filter.toLowerCase()) ? "" : "none"}} key={i}>
-            <Card.Img variant="top" src={actor.picture} />
-            <Card.Body>
-                <Card.Title><Card.Link href={actor.imbdLink} target="_blank">{actor.fullName}</Card.Link></Card.Title>
-                <Card.Text>Age: {actor.getAge()}</Card.Text>             
-            </Card.Body>
-        </Card>
+        <ActorCard filter={filter} keyIndex={i} picture={actor.picture} imdbLink={actor.imdbLink} fullName={actor.fullName} age={actor.getAge()}/>
     );
 
-    const movieCards = selectedMovie.map((movie, index) => {
-        return <MovieCard key={index} movieName={movie}></MovieCard> 
-    });
+    const movieCards = selectedMovie.map((movie, index) => 
+        <MovieCard key={index} movieName={movie}/>
+    );
 
     return(
         <Container>

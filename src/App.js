@@ -11,7 +11,7 @@ const App = () => {
   React.useEffect(() => {
     // Runs after the first render() lifecycle
     axios.get('/actors.json').then( (res) => {
-      const actors = res.data.map(actor => new Actor(actor.fname, actor.lname, actor.birthday, actor.imbdLink, actor.picture));
+      const actors = res.data.map(actor => new Actor(actor.fname, actor.lname, actor.birthday, actor.imdbLink, actor.picture));
       setActorsData(actors);
     })
   }, []);
