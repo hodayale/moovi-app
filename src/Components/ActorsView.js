@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React from 'react';
 import { CardColumns, Col, Container, Form, Jumbotron, Row } from 'react-bootstrap';
 import ActorCard from './ActorCard';
@@ -10,7 +11,7 @@ const ActorsView = (props) => {
     const [results, setResults] = React.useState([]);
     const [selectedMovie, setselectedMovie] = React.useState([]);
 
-    const staticMovieJson = ["Wonder Woman", "Skylines", "Breach", "Monster Hunter"];
+    //const staticMovieJson = ["Wonder Woman", "Skylines", "Breach", "Monster Hunter"];
 
     const searchMovie = (searchText) => {
         if(!searchText) {
@@ -18,8 +19,15 @@ const ActorsView = (props) => {
             return;
         }
 
-        const searchResults = staticMovieJson.filter((movie) => { return movie.toLowerCase().includes(searchText.toLowerCase()); });
-        setResults(searchResults);
+        axios.get(`https://api.themoviedb.org/3/search/movie?api_key=08442e61ff4b1a9dadac378c430aabf7&query=${searchText}`)
+                .then((res) => {
+                    const names = res.data.results.map((item) => item.title);
+                    debugger;
+                    setResults(names);
+                });
+
+        // const searchResults = staticMovieJson.filter((movie) => { return movie.toLowerCase().includes(searchText.toLowerCase()); });
+        // setResults(searchResults);
     }
 
     const addMovie = (index) => {
