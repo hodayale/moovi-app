@@ -6,10 +6,10 @@ const MovieCard = (props) => {
         <Card style={{ width: '18rem'}} key={id}>
             <Card.Img variant="top" src={poster} />
             <Card.Body>
-                <Card.Title>{name}</Card.Title>   
-                <Card.Text>Length in minutes: {lengthInMin}</Card.Text> 
-                <Card.Text>Director: {director}</Card.Text> 
-                <Card.Text>Main Stars: {mainStars}</Card.Text>         
+                <Card.Title className="text-primary">{name}</Card.Title>   
+                <Card.Text className="font-weight-bold">Length: <span className="font-italic font-weight-normal">{lengthInMin} minutes</span></Card.Text> 
+                <Card.Text className="font-weight-bold">Director: <span className="font-italic font-weight-normal">{director}</span></Card.Text> 
+                <Card.Text className="font-weight-bold">Main Stars: <span className="font-italic font-weight-normal">{mainStars}</span></Card.Text>         
             </Card.Body>
         </Card>
     );

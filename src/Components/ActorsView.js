@@ -37,10 +37,13 @@ const ActorsView = (props) => {
         const movie = results[index];
         axios.get(`https://api.themoviedb.org/3/movie/${movie.id}?api_key=08442e61ff4b1a9dadac378c430aabf7&append_to_response=images,credits`)
                 .then((res) => {
-                    debugger;
                     const director = res.data.credits.crew.find(item => item.known_for_department === "Directing");
-                    const star = res.data.credits.cast[0] != undefined ? res.data.credits.cast[0].name : "";
-                    const movie = new Movie(res.data.id, res.data.title, 0, `https://image.tmdb.org/t/p/w200${res.data.poster_path}`, director != undefined ? director.name : "", star);
+                    let mainStars = "";
+                    for(let i=0; i<2; i++){
+                        mainStars += res.data.credits.cast[i] != undefined ? res.data.credits.cast[i].name + (i === 1 ? "" : ", " ): "";
+                    }
+                    //const star = res.data.credits.cast[0] != undefined ? res.data.credits.cast[0].name : "";
+                    const movie = new Movie(res.data.id, res.data.title, res.data.runtime, `https://image.tmdb.org/t/p/w200${res.data.poster_path}`, director != undefined ? director.name : "", mainStars);
                     setselectedMovie(selectedMovie.concat(movie));
                 })
         // setselectedMovie(selectedMovie.concat(movie));
