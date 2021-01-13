@@ -11,6 +11,19 @@ import LiveSearchBox from './LiveSearchBox';
 const ActorsView = (props) => {
     const {actors} = props;
     const [filter, setFilter] = React.useState('');
+    const [results, setResults] = React.useState([]);
+
+    const staticMoovieJson = ["Wonder Woman", "Skylines", "Breach", "Monster Hunter"];
+
+    const SearchMoovie = (searchText) => {
+        if(!searchText) {
+            setResults([]);
+            return;
+        }
+
+        const searchResults = staticMoovieJson.filter((moovie) => { return moovie.toLowerCase().includes(searchText.toLowerCase()); });
+        setResults(searchResults);
+    }
 
     const actorArr = actors.map( (actor, i) => 
         <Card style={{ width: '18rem', display: actor.fullName.toLowerCase().includes(filter.toLowerCase()) ? "" : "none"}} key={i}>
@@ -40,7 +53,8 @@ const ActorsView = (props) => {
             <CardColumns>
                 {actorArr}
             </CardColumns>
-            <LiveSearchBox placeholderText="Search an Actor" results={["Ellen", "Patrick", "Sandra"]}/>
+            <LiveSearchBox placeholderText="Search a Moovie" results={results}
+                        searchTextChanged={SearchMoovie}/>
         </Container>
     )
 }
