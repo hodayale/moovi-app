@@ -6,6 +6,7 @@ import Form from 'react-bootstrap/Form'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import { Container } from 'react-bootstrap';
+import LiveSearchBox from './LiveSearchBox';
 
 const ActorsView = (props) => {
     const {actors} = props;
@@ -23,8 +24,8 @@ const ActorsView = (props) => {
 
     return(
         <Container>
-            <Jumbotron>
-                <h1 className="text-center text-primary">Actors Gallery</h1>           
+            <Jumbotron className="bg-white">
+                <h1 className="text-center text-secondary display-2">Actors Gallery</h1>           
             </Jumbotron>
             <Form>
                 <Form.Group as={Row} controlId="formPlaintextFilter">
@@ -39,6 +40,7 @@ const ActorsView = (props) => {
             <CardColumns>
                 {actorArr}
             </CardColumns>
+            <LiveSearchBox placeholderText="Search an Actor" results={["Ellen", "Patrick", "Sandra"]}/>
         </Container>
     )
 }
