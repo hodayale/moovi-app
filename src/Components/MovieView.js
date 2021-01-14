@@ -26,7 +26,7 @@ const MovieView = () => {
         setResults([]);
 
         const movie = results[index];
-        axios.get(`https://api.themoviedb.org/3/movie/${movie.id}?api_key=08442e61ff4b1a9dadac378c430aabf7&append_to_response=images,credits`)
+        axios.get(`https://api.themoviedb.org/3/movie/${movie.id}?api_key=08442e61ff4b1a9dadac378c430aabf7&append_to_response=credits`)
                 .then((res) => {
                     const director = res.data.credits.crew.find(item => item.known_for_department === "Directing");
                     let mainStars = "";

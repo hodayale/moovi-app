@@ -1,11 +1,12 @@
 import './App.css';
 import React from 'react';
-import { Container } from 'react-bootstrap';
+import { Container, Nav, Navbar } from 'react-bootstrap';
 import ActorsView from './Components/ActorsView';
 import Actor from './data-model/Actor';
 import axios from 'axios';
-import { HashRouter } from 'react-router-dom';
+import { HashRouter, Route } from 'react-router-dom';
 import MovieView from './Components/MovieView';
+import HomePage from './Components/HomePage';
 
 const App = () => {
   const [actorsData, setActorsData] = React.useState([]);
@@ -20,9 +21,23 @@ const App = () => {
   
   return (
     <HashRouter>
-      <Container>
-        <ActorsView actors={actorsData}/>
-        <MovieView />
+      <Container className="c-app">
+        <Navbar bg="dark" variant="dark">
+          <Navbar.Brand href="#/">M&A Gallery</Navbar.Brand>
+          <Nav className="mr-auto">
+            <Nav.Link href="#/actors">Actors</Nav.Link>
+            <Nav.Link href="#/movies">Movies</Nav.Link>
+          </Nav>
+        </Navbar>
+        <Route exact path="/">
+          <HomePage/>
+        </Route>
+        <Route exact path="/actors">
+          <ActorsView actors={actorsData}/>
+        </Route>
+        <Route exact path="/movies">
+          <MovieView />
+        </Route>
       </Container>
     </HashRouter>
   );
