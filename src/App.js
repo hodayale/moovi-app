@@ -7,6 +7,7 @@ import axios from 'axios';
 import { HashRouter, Route } from 'react-router-dom';
 import MovieView from './Components/MovieView';
 import HomePage from './Components/HomePage';
+import MovieDetails from './Components/MovieDetails';
 
 const App = () => {
   const [actorsData, setActorsData] = React.useState([]);
@@ -37,6 +38,9 @@ const App = () => {
         </Route>
         <Route exact path="/movies">
           <MovieView />
+        </Route>
+        <Route exact path="/movies/:id">
+          <MovieDetails/>
         </Route>
       </Container>
     </HashRouter>

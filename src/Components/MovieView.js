@@ -31,15 +31,14 @@ const MovieView = () => {
                     const director = res.data.credits.crew.find(item => item.known_for_department === "Directing");
                     let mainStars = "";
                     for(let i=0; i<2; i++){
-                        mainStars += res.data.credits.cast[i] != undefined ? res.data.credits.cast[i].name + (i === 1 ? "" : ", " ): "";
+                        mainStars += res.data.credits.cast[i] !== undefined ? res.data.credits.cast[i].name + (i === 1 ? "" : ", " ): "";
                     }
-                    //const star = res.data.credits.cast[0] != undefined ? res.data.credits.cast[0].name : "";
-                    const movie = new Movie(res.data.id, res.data.title, res.data.runtime, `https://image.tmdb.org/t/p/w200${res.data.poster_path}`, director != undefined ? director.name : "", mainStars);
+                    const movie = new Movie(res.data.id, res.data.title, res.data.runtime, `https://image.tmdb.org/t/p/w200${res.data.poster_path}`, director !== undefined ? director.name : "", mainStars);
                     setselectedMovie(selectedMovie.concat(movie));
                 })
     }
 
-    const movieCards = selectedMovie.map((movie, index) => 
+    const movieCards = selectedMovie.map((movie) => 
         <MovieCard id={movie.id} name={movie.name} lengthInMin={movie.lengthInMin} poster={movie.poster} director={movie.director} mainStars={movie.mainStars}/>
     );
 
