@@ -4,6 +4,8 @@ import { Container } from 'react-bootstrap';
 import ActorsView from './Components/ActorsView';
 import Actor from './data-model/Actor';
 import axios from 'axios';
+import { HashRouter } from 'react-router-dom';
+import MovieView from './Components/MovieView';
 
 const App = () => {
   const [actorsData, setActorsData] = React.useState([]);
@@ -17,9 +19,12 @@ const App = () => {
   }, []);
   
   return (
-    <Container>
-      <ActorsView actors={actorsData}/>
-    </Container>
+    <HashRouter>
+      <Container>
+        <ActorsView actors={actorsData}/>
+        <MovieView />
+      </Container>
+    </HashRouter>
   );
 }
 
